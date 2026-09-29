@@ -1,5 +1,5 @@
 // Holds the WebSocket + room state. Popup and content scripts talk to this.
-const SERVER = 'ws://localhost:8080'; // change to wss://your-server when deployed
+const SERVER = 'https://watchpartyself.onrender.com'; // change to wss://your-server when deployed
 
 let ws = null, cid = null, keep = null, curUrl = '', myName = '';
 let S = { room: null, me: null, members: [] };
