@@ -1,0 +1,136 @@
+<!doctype html>
+<meta charset="utf-8">
+<style>
+  :root{
+    --bg:#0d0e11; --panel:#17181d; --tile:rgba(255,255,255,.035); --line:rgba(255,255,255,.07);
+    --txt:#f3f4f6; --mut:#7f8390; --teal:#2ee6b8; --teal2:#0f9d84; --amber:#ffb03a;
+  }
+  *{box-sizing:border-box}
+  body{
+    width:360px;margin:0;padding:14px;color:var(--txt);
+    font:13px/1.4 'Montserrat','Poppins','Segoe UI',system-ui,sans-serif;
+    background:
+      radial-gradient(240px 160px at 100% 0%, rgba(46,230,184,.12), transparent 70%),
+      radial-gradient(220px 160px at 0% 100%, rgba(255,176,58,.08), transparent 70%),
+      var(--bg);
+  }
+
+  /* header */
+  .hdr{display:flex;align-items:center;gap:11px;margin-bottom:14px}
+  .logo{width:38px;height:38px;border-radius:12px;flex:none;display:grid;place-items:center;
+    background:linear-gradient(145deg,#1f2b29,#12191a);border:1px solid rgba(46,230,184,.35);
+    box-shadow:0 0 18px rgba(46,230,184,.25)}
+  .hd-t{flex:1;min-width:0}
+  .title{font-size:16px;font-weight:700;letter-spacing:.2px}
+  #page{font-size:10.5px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+  .pill{display:flex;align-items:center;gap:7px;padding:6px 11px;border-radius:20px;
+    background:#1c1d23;border:1px solid var(--line);font-size:11px;font-weight:600;color:#c9ccd4}
+  .sdot{width:7px;height:7px;border-radius:50%;background:#ff5d5d;box-shadow:0 0 8px rgba(255,93,93,.7)}
+  .sdot.ok{background:var(--teal);box-shadow:0 0 8px var(--teal)}
+
+  /* cards */
+  .card{position:relative;overflow:hidden;margin-bottom:12px;padding:14px;border-radius:20px;
+    background:linear-gradient(150deg,#1e2027 0%,#15161b 100%);border:1px solid var(--line);
+    box-shadow:0 12px 30px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.05)}
+  .card>*{position:relative;z-index:1}
+  .card.amber::after,.card.teal::after{content:"";position:absolute;pointer-events:none;width:170px;height:170px;border-radius:50%;filter:blur(14px)}
+  .card.amber::after{top:-80px;right:-60px;background:radial-gradient(circle,rgba(255,176,58,.28),transparent 65%)}
+  .card.teal::after{bottom:-90px;right:-60px;background:radial-gradient(circle,rgba(46,230,184,.26),transparent 65%)}
+  label{display:block;margin-bottom:8px;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--mut)}
+
+  /* inputs + buttons */
+  .inline{display:flex;gap:8px}
+  input{flex:1;width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--line);
+    background:#0f1014;color:var(--txt);font:inherit;outline:none;box-shadow:inset 0 2px 6px rgba(0,0,0,.4)}
+  input::placeholder{color:#565a66}
+  input:focus{border-color:rgba(46,230,184,.6);box-shadow:0 0 0 3px rgba(46,230,184,.12)}
+  button{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 16px;border:0;border-radius:12px;
+    font:inherit;font-weight:700;cursor:pointer;color:#05231d;
+    background:linear-gradient(135deg,var(--teal),var(--teal2));box-shadow:0 6px 18px rgba(46,230,184,.22);
+    transition:transform .12s,filter .15s}
+  button:hover{filter:brightness(1.1)} button:active{transform:scale(.97)}
+  button.ghost{background:#23252d;color:var(--txt);box-shadow:none;border:1px solid var(--line)}
+  button.danger{background:rgba(255,93,93,.1);color:#ff7a7a;box-shadow:none;border:1px solid rgba(255,93,93,.18)}
+  button.full{width:100%;padding:12px}
+  .or{display:flex;align-items:center;gap:10px;margin:14px 0;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--mut)}
+  .or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  /* room id (big number style) */
+  .rid{display:flex;align-items:center;justify-content:space-between}
+  #rid{font-size:32px;font-weight:800;letter-spacing:6px;text-transform:uppercase}
+  .bar{height:5px;border-radius:5px;margin-top:12px;background:rgba(255,255,255,.07);overflow:hidden}
+  .bar i{display:block;height:100%;width:72%;border-radius:5px;background:linear-gradient(90deg,var(--teal),#fff)}
+
+  /* members */
+  .member{display:flex;align-items:center;gap:12px;padding:10px;margin-bottom:8px;border-radius:14px;
+    background:var(--tile);border:1px solid rgba(255,255,255,.04)}
+  .member:last-child{margin-bottom:0}
+  .av{width:40px;height:40px;border-radius:50%;flex:none;display:grid;place-items:center;
+    border:3px solid var(--teal);font-weight:800;font-size:15px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+  .av.off{border-color:#ff5d5d}
+  .nm{display:flex;align-items:center;gap:7px;font-weight:700;font-size:13.5px}
+  .tag{padding:2px 7px;border-radius:6px;font-size:9px;font-weight:800;letter-spacing:.8px;
+    background:rgba(46,230,184,.14);color:var(--teal)}
+  .tag.host{background:rgba(255,176,58,.16);color:var(--amber)}
+  .sub{font-size:11px;color:var(--mut)}
+  a{display:block;font-size:11px;color:#8fd8c6;word-break:break-all;cursor:pointer;text-decoration:none;opacity:.9}
+  a:hover{text-decoration:underline;opacity:1}
+
+  .btns{display:flex;gap:8px}.btns button:first-child{flex:1}
+  #err{min-height:0;margin-top:2px;font-size:12px;color:#ff7a7a}
+</style>
+
+<div class="hdr">
+  <div class="logo">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="#2ee6b8"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>
+  </div>
+  <div class="hd-t">
+    <div class="title">WatchParty</div>
+    <span id="page"></span>
+  </div>
+  <div class="pill"><span class="sdot" id="dot"></span><span id="stt">Connecting</span></div>
+</div>
+
+<div class="card amber">
+  <label>Your name</label>
+  <div class="inline">
+    <input id="name" maxlength="20" placeholder="Type your name">
+    <button id="save" class="ghost">Save</button>
+  </div>
+</div>
+
+<div id="home">
+  <div class="card">
+    <button id="create" class="full">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      Create a room
+    </button>
+    <div class="or">or join a friend</div>
+    <div class="inline">
+      <input id="code" placeholder="Room ID">
+      <button id="join">Join</button>
+    </div>
+  </div>
+</div>
+
+<div id="room" style="display:none">
+  <div class="card teal">
+    <label>Room ID</label>
+    <div class="rid"><span id="rid"></span><button id="copy" class="ghost">Copy</button></div>
+    <div class="bar"><i></i></div>
+  </div>
+  <div class="card">
+    <label>In this room</label>
+    <div id="list"></div>
+  </div>
+  <div class="btns">
+    <button id="start">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2.5v14H6zM20 5.5v13a.8.8 0 0 1-1.2.7L9 12.7a.8.8 0 0 1 0-1.4l9.8-6.5a.8.8 0 0 1 1.2.7z"/></svg>
+      Start over
+    </button>
+    <button id="leave" class="danger">Leave</button>
+  </div>
+</div>
+<div id="err"></div>
+<span id="st" hidden></span> <!-- keeps older popup.js versions from crashing -->
+<script src="popup.js"></script>

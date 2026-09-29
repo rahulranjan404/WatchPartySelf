@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "WatchParty",
+  "version": "1.0.0",
+  "description": "Watch YouTube in sync with friends: shared play, pause and seek, ad-aware waiting, and overlay chat.",
+  "icons": { "16": "icon16.png", "32": "icon32.png", "48": "icon48.png", "128": "icon128.png" },
+  "permissions": ["tabs", "storage"],
+  "background": { "service_worker": "background.js" },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "WatchParty",
+    "default_icon": { "16": "icon16.png", "32": "icon32.png", "48": "icon48.png" }
+  },
+  "content_scripts": [{
+    "matches": ["https://www.youtube.com/*", "https://m.youtube.com/*"],
+    "js": ["content.js"],
+    "run_at": "document_idle"
+  }]
+}
